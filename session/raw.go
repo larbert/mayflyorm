@@ -13,8 +13,8 @@ type Session struct {
 	sqlParams []interface{}
 }
 
-func New(db *sql.DB) Session {
-	return Session{db: db}
+func New(db *sql.DB) *Session {
+	return &Session{db: db}
 }
 
 func (s *Session) Clear() {

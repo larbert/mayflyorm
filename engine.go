@@ -4,6 +4,7 @@ import (
 	"database/sql"
 
 	"github.com/larbert/mayflylog"
+	"github.com/larbert/mayflyorm/session"
 )
 
 type Engine struct {
@@ -32,4 +33,8 @@ func (e *Engine) Close() {
 		return
 	}
 	mayflylog.Info("数据库关闭成功")
+}
+
+func (e *Engine) NewSession() *session.Session {
+	return session.New(e.db)
 }
