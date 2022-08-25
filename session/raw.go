@@ -42,3 +42,18 @@ func (s *Session) Exec() (result sql.Result, err error) {
 	}
 	return
 }
+
+func (s *Session) QueryRow() *sql.Row {
+	defer s.Clear()
+	mayflylog.Info(s.sql.String(), s.sqlParams)
+	return s.DB().QueryRow(s.sql.String(), s.sqlParams...)
+}
+
+func (s *Session) QueryRows() (rows *sql.Rows, err error) {
+	defer s.Clear()
+	mayflylog.Info(s.sql.String(), s.sqlParams)
+	if rows, err = s.DB().Query(s.sql.String(), s.sqlParams...); err != nil {
+		mayflylog.Error(err)
+	}
+	return
+}
